@@ -1,37 +1,31 @@
 import PostCoverImage from "../PostCoverImage";
-import PostHeading from "../PostHeading";
+import PostSummary from "../PostSummary";
+import { findAllPublicPosts } from "@/lib/post/queries";
 
-const FeaturedPost = () => {
-  const slug = "123";
-  const postLink = `post/${slug}`;
+const FeaturedPost = async () => {
+  const posts = await findAllPublicPosts();
+  const post = posts[0];
+  const postLink = `post/${post.slug}`;
+
   return (
     <section className="grid grid-cols-1 gap-8 mb-16 sm:grid-cols-2 group">
       <PostCoverImage
         imageProps={{
-          alt: "Título do post",
-          src: "/images/bryen_8.png",
+          alt: post.title,
+          src: post.coverImageUrl,
           width: 1200,
           height: 720,
           priority: true,
         }}
         linkProps={{ href: postLink }}
       />
-      <div className="flex flex-col gap-4 sm:justify-center">
-        <time
-          className="text-muted-foreground block text-xs/tight"
-          dateTime="2025-29-12"
-        >
-          29/12/2025 20:22
-        </time>
-        <PostHeading as="h1" url={postLink}>
-          Sit, alias nemo ab
-        </PostHeading>
-        <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit, alias
-          nemo ab, vel aspernatur molestias fugit blanditiis quas natus at, a
-          deleniti soluta odit maxime laudantium aliquid nam unde mollitia.
-        </p>
-      </div>
+      <PostSummary
+        createdAt={post.createdAt}
+        excerpt={post.excerpt}
+        postHeading="h1"
+        postLink={postLink}
+        title={post.title}
+      />
     </section>
   );
 };
