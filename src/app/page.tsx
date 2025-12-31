@@ -6,9 +6,8 @@ import PostSkeleton from "@/components/PostSkeleton";
 export default async function Home() {
   return (
     <>
-      <FeaturedPost />
-
       <Suspense fallback={<PostSkeleton />}>
+        <FeaturedPost />
         <PostsList />
       </Suspense>
     </>

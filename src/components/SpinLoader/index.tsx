@@ -5,7 +5,11 @@ interface SpinLoaderProps {
 }
 
 const SpinLoader = ({ containerClasses = "" }: SpinLoaderProps) => {
-  return <Spinner className={`${containerClasses} w-10 h-10`} />;
+  return (
+    <div className="items-center justify-center flex">
+      <Spinner className={`${containerClasses} w-10 h-10 `} />
+    </div>
+  );
 };
 
 export default SpinLoader;
