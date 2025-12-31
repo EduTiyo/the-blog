@@ -18,7 +18,7 @@ const PostCoverImage = ({ imageProps, linkProps }: PostCoverImageProps) => {
         "rounded-xl",
         linkProps.className
       )}
-      href="#"
+      href={linkProps.href}
     >
       <Image
         {...imageProps}
