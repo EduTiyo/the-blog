@@ -23,15 +23,6 @@ export async function generateMetadata({
   };
 }
 
-export async function generateStaticParams() {
-  const posts = await findAllPublicPostsCached();
-  return {
-    slug: posts.map((post) => {
-      slug: post.slug;
-    }),
-  };
-}
-
 const PostSlugPage = async ({ params }: PostSlugPageProps) => {
   const { slug } = await params;
 
