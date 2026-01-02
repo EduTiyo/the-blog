@@ -15,7 +15,3 @@ export function formatRelativeDate(rawDate: string): string {
   });
   return formattedRelativeDate;
 }
-
-const rawDate = "2025-12-30T12:04:23.205Z";
-const formattedRelativeDate = formatRelativeDate(rawDate);
-console.log(formattedRelativeDate);
