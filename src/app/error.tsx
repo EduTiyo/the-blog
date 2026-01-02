@@ -2,12 +2,7 @@
 
 import ErrorMessage from "@/components/ErrorMessage";
 
-interface RootErrorPageProps {
-  error: Error;
-  reset: () => void;
-}
-
-const RootErrorPage = ({ error, reset }: RootErrorPageProps) => {
+const RootErrorPage = () => {
   return (
     <ErrorMessage
       pageTitle="Internal Server Error"

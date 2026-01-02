@@ -30,6 +30,7 @@ const PostCoverImage = ({ imageProps, linkProps }: PostCoverImageProps) => {
           "transition",
           imageProps.className
         )}
+        alt={imageProps.alt}
       />
     </Link>
   );
