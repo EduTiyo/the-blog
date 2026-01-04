@@ -3,6 +3,8 @@ import { Suspense } from "react";
 import FeaturedPost from "@/components/FeaturedPost";
 import PostSkeleton from "@/components/PostSkeleton";
 
+export const dynamic = "force-static";
+
 export default async function Home() {
   return (
     <>
