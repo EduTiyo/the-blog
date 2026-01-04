@@ -1,5 +1,7 @@
 "use client";
 
+import { deletePostAction } from "@/actions/post/delete-post-action";
+import { DeletePostButton } from "@/components/admin/DeletePostButton";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -97,10 +99,19 @@ export const columns: ColumnDef<PostModel>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem asChild>
-              <Link href={`/admin/post/${post.id}`}>Ver post</Link>
+              <Link
+                href={`/admin/post/${post.id}`}
+                aria-label={`Ver post ${post.title}`}
+                title={`Ver post ${post.title}`}
+              >
+                Ver post
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <button className="w-full">Excluir post</button>
+              <div>
+                <input type="hidden" defaultValue={post.id} name="id" />
+                <DeletePostButton id={post.id} title={post.title} />
+              </div>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
