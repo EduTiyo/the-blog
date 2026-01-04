@@ -1,8 +1,17 @@
 "use client";
 
-import { deletePostAction } from "@/actions/post/delete-post-action";
 import { DeletePostButton } from "@/components/admin/DeletePostButton";
+import MainDialog from "@/components/MainDialog";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +24,7 @@ import { formatDate } from "@/utils/format-datetime";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowDown, ArrowUp, ArrowUpDown, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 const postStatusLabel = {
   true: "Público",
@@ -88,6 +98,7 @@ export const columns: ColumnDef<PostModel>[] = [
     id: "actions",
     cell: ({ row }) => {
       const post = row.original;
+      const [dialogOpen, setDialogOpen] = useState(false);
 
       return (
         <DropdownMenu>
@@ -107,12 +118,18 @@ export const columns: ColumnDef<PostModel>[] = [
                 Ver post
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <div>
-                <input type="hidden" defaultValue={post.id} name="id" />
-                <DeletePostButton id={post.id} title={post.title} />
-              </div>
-            </DropdownMenuItem>
+            <MainDialog
+              title="Tem certeza?"
+              description="Esta ação não pode ser desfeita. Deseja realmente excluir este post?"
+              postTitle={post.title}
+              postId={post.id}
+              open={dialogOpen}
+              onOpenChange={setDialogOpen}
+            >
+              <DropdownMenuItem asChild onSelect={(e) => e.preventDefault()}>
+                <button className="w-full">Excluir post</button>
+              </DropdownMenuItem>
+            </MainDialog>
           </DropdownMenuContent>
         </DropdownMenu>
       );
