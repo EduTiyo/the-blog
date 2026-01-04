@@ -1,12 +1,12 @@
 import { findAllPostAdmin } from "@/lib/post/queries/admin";
+import { DataTable } from "../DataTable";
+import { columns } from "@/app/admin/post/columns";
 
 const PostsListAdmin = async () => {
   const posts = await findAllPostAdmin();
   return (
-    <div className="py-16 mx-auto text-center">
-      {posts.map((post) => {
-        return <p key={post.id}>{post.title}</p>;
-      })}
+    <div className="container mx-auto py-10">
+      <DataTable columns={columns} data={posts} />
     </div>
   );
 };
