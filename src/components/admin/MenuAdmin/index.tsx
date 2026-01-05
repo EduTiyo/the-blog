@@ -78,7 +78,7 @@ const MenuAdmin = () => {
       <NavigationMenuList className="hidden sm:flex">
         {menuItems.map((item, idx) => {
           return (
-            <NavigationMenuItem>
+            <NavigationMenuItem key={idx}>
               <NavigationMenuLink
                 asChild
                 className={clsx(

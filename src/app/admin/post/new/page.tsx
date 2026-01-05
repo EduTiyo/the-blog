@@ -1,9 +1,11 @@
+import { Input } from "@/components/ui/input";
+
 export const dynamic = "force-dynamic";
 
 const AdminPostNewPage = () => {
   return (
-    <div className="py-16 text-6xl/tight mx-auto text-center">
-      AdminPostNewPage
+    <div className="py-16 mx-auto text-center">
+      <Input type="email" placeholder="email" label="asdfoijasdofij" />
     </div>
   );
 };
