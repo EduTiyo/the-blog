@@ -1,7 +1,7 @@
 import clsx from "clsx";
 
 interface ErrorMessageProps {
-  pageTitle: string;
+  pageTitle?: string;
   contentTitle: string;
   content: React.ReactNode;
 }
@@ -13,7 +13,7 @@ const ErrorMessage = ({
 }: ErrorMessageProps) => {
   return (
     <>
-      <title>{pageTitle}</title>
+      {pageTitle && <title>{pageTitle}</title>}
       <div
         className={clsx(
           "text-slate-900 border-2 border-dashed",

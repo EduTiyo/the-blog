@@ -9,7 +9,6 @@ import { revalidateTag } from "next/cache";
 
 export async function deletePostAction(id: string) {
   // remover depois
-  await asyncDelay(2000);
 
   if (!id || typeof id !== "string") {
     return {
