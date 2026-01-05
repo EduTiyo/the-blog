@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 
 import "./globals.css";
 import Footer from "@/components/Footer";
+import MessagesContainer from "@/components/MessagesContainer";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -18,11 +19,13 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body>
-        <Container>
-          <Header />
-          {children}
-          <Footer />
-        </Container>
+        <MessagesContainer>
+          <Container>
+            <Header />
+            {children}
+            <Footer />
+          </Container>
+        </MessagesContainer>
       </body>
     </html>
   );

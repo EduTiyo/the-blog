@@ -1,6 +1,7 @@
 "use client";
 
 import { deletePostAction } from "@/actions/post/delete-post-action";
+import { showMessage } from "@/adapters/showMessage";
 import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
 
@@ -17,14 +18,17 @@ export function DeletePostButton({
   const [isPending, startTransition] = useTransition();
 
   async function handleClick() {
+    showMessage.dismiss();
     startTransition(async () => {
       const result = await deletePostAction(id);
 
       if (result.error) {
-        alert(`Ocorreu um erro: ${result.error}`);
+        showMessage.error(result.error);
+        return;
       }
 
       onSuccess?.();
+      showMessage.success("Post deletado com sucesso");
     });
   }
 
