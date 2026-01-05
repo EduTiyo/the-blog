@@ -1,30 +1,10 @@
 "use client";
 
-import { DeletePostButton } from "@/components/admin/DeletePostButton";
-import MainDialog from "@/components/MainDialog";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { PostModel } from "@/models/post/post-model";
 import { formatDate } from "@/utils/format-datetime";
-
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowDown, ArrowUp, ArrowUpDown, MoreHorizontal } from "lucide-react";
-import Link from "next/link";
-import { useState } from "react";
+import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
+import { ActionsCell } from "./components/ActionsCell";
 
 const postStatusLabel = {
   true: "Público",
@@ -98,41 +78,7 @@ export const columns: ColumnDef<PostModel>[] = [
     id: "actions",
     cell: ({ row }) => {
       const post = row.original;
-      const [dialogOpen, setDialogOpen] = useState(false);
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem asChild>
-              <Link
-                href={`/admin/post/${post.id}`}
-                aria-label={`Ver post ${post.title}`}
-                title={`Ver post ${post.title}`}
-              >
-                Ver post
-              </Link>
-            </DropdownMenuItem>
-            <MainDialog
-              title="Tem certeza?"
-              description="Esta ação não pode ser desfeita. Deseja realmente excluir este post?"
-              postTitle={post.title}
-              postId={post.id}
-              open={dialogOpen}
-              onOpenChange={setDialogOpen}
-            >
-              <DropdownMenuItem asChild onSelect={(e) => e.preventDefault()}>
-                <button className="w-full">Excluir post</button>
-              </DropdownMenuItem>
-            </MainDialog>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      return <ActionsCell id={post.id} title={post.title} />;
     },
   },
 ];

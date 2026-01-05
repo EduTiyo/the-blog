@@ -21,12 +21,12 @@ export const findPublicPostBySlugCached = cache((slug: string) => {
       const post = await postRepository
         .findBySlugPublic(slug)
         .catch(() => undefined);
+
       if (!post) notFound();
+
       return post;
     },
     [`post-${slug}`],
-    {
-      tags: [`post-${slug}`],
-    }
+    { tags: [`post-${slug}`] }
   )(slug);
 });

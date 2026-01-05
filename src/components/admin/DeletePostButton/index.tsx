@@ -19,7 +19,11 @@ export function DeletePostButton({
   async function handleClick() {
     startTransition(async () => {
       const result = await deletePostAction(id);
-      alert(`o result é ${result}`);
+
+      if (result.error) {
+        alert(`Ocorreu um erro: ${result.error}`);
+      }
+
       onSuccess?.();
     });
   }

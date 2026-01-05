@@ -1,6 +1,4 @@
-import { MoreHorizontal } from "lucide-react";
 import { DeletePostButton } from "../admin/DeletePostButton";
-import { Button } from "../ui/button";
 import {
   Dialog,
   DialogContent,

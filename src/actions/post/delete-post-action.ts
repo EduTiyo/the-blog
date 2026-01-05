@@ -1,11 +1,36 @@
 "use server";
 
+import { drizzleDb } from "@/db/drizzle";
+import { postsTable } from "@/db/drizzle/schemas";
+import { postRepository } from "@/repositories/post";
 import { asyncDelay } from "@/utils/async-delay";
+import { eq } from "drizzle-orm";
+import { revalidateTag } from "next/cache";
 
 export async function deletePostAction(id: string) {
+  // remover depois
   await asyncDelay(2000);
 
-  console.log(`deletando post ${id}`);
+  if (!id || typeof id !== "string") {
+    return {
+      error: "Dados inválidos",
+    };
+  }
 
-  return id;
+  const post = await postRepository.findById(id).catch(() => undefined);
+
+  if (!post) {
+    return {
+      error: "post não existe na base de dados",
+    };
+  }
+
+  await drizzleDb.delete(postsTable).where(eq(postsTable.id, id));
+
+  revalidateTag("posts");
+  revalidateTag(`post-${post.slug}`);
+
+  return {
+    error: "",
+  };
 }
