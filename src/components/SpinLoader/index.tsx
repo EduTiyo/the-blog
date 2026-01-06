@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { Spinner } from "../ui/spinner";
 
 interface SpinLoaderProps {
@@ -7,7 +8,7 @@ interface SpinLoaderProps {
 const SpinLoader = ({ containerClasses = "" }: SpinLoaderProps) => {
   return (
     <div className="items-center justify-center flex">
-      <Spinner className={`${containerClasses} w-10 h-10 `} />
+      <Spinner className={cn("w-10 h-10", containerClasses)} />
     </div>
   );
 };
