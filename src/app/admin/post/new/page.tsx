@@ -5,7 +5,6 @@ export const dynamic = "force-dynamic";
 const AdminPostNewPage = () => {
   return (
     <>
-      <h1>criar post</h1>
       <ManagePostForm />
     </>
   );
