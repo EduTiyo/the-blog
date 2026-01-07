@@ -1,11 +1,10 @@
 "use client";
 
-import { uploadImageAction } from "@/actions/post/upload-image-action";
+import { uploadImageAction } from "@/actions/upload/upload-image-action";
 import { showMessage } from "@/adapters/showMessage";
 import SpinLoader from "@/components/SpinLoader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Spinner } from "@/components/ui/spinner";
 import { IMAGE_UPLOAD_MAX_SIZE } from "@/lib/constants";
 import { ImageUpIcon } from "lucide-react";
 import { useRef, useState, useTransition } from "react";
