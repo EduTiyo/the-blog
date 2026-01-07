@@ -6,18 +6,24 @@ import { useState } from "react";
 import ImageUploader from "../ImageUploader";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
+import { PublicPost } from "@/dto/post/dto";
 
-const ManagePostForm = () => {
-  const [contentValue, setContentValue] = useState("");
+type ManagePostFormProps = {
+  publicPost?: PublicPost;
+};
+
+const ManagePostForm = ({ publicPost }: ManagePostFormProps) => {
+  const [contentValue, setContentValue] = useState(publicPost?.content || "");
 
   return (
     <form action="" className="mb-16">
-      <div className="flex flex-col py-16 mx-auto text-center gap-4 ">
+      <div className="flex flex-col mx-auto text-center gap-4 ">
         <Input
           label="Autor"
           type="text"
           name="author"
           placeholder="Autor do post"
+          defaultValue={publicPost?.author || ""}
         />
 
         <Input
@@ -26,6 +32,7 @@ const ManagePostForm = () => {
           name="slug"
           placeholder="Slug gerada automaticamente"
           readOnly
+          defaultValue={publicPost?.slug || ""}
         />
 
         <Input
@@ -33,6 +40,7 @@ const ManagePostForm = () => {
           type="text"
           name="title"
           placeholder="Título do post"
+          defaultValue={publicPost?.title || ""}
         />
 
         <Input
@@ -40,6 +48,7 @@ const ManagePostForm = () => {
           type="text"
           name="excerpt"
           placeholder="Excerto do post"
+          defaultValue={publicPost?.excerpt || ""}
         />
 
         <MarkdownEditor
@@ -56,9 +65,14 @@ const ManagePostForm = () => {
           type="text"
           name="coverImageUrl"
           placeholder="URL da imagem"
+          defaultValue={publicPost?.coverImageUrl || ""}
         />
 
-        <Checkbox label="Publicar?" name="published" />
+        <Checkbox
+          label="Publicar?"
+          name="published"
+          defaultChecked={publicPost?.published || false}
+        />
 
         <Button type="submit">Enviar</Button>
       </div>
