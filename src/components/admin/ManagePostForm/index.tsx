@@ -47,15 +47,6 @@ const ManagePostForm = ({ publicPost }: ManagePostFormProps) => {
         />
 
         <Input
-          label="Slug"
-          type="text"
-          name="slug"
-          placeholder="Slug gerada automaticamente"
-          readOnly
-          defaultValue={formState.slug}
-        />
-
-        <Input
           label="Título"
           type="text"
           name="title"
