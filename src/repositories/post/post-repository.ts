@@ -5,4 +5,8 @@ export interface PostRepository {
   findAllPublic(): Promise<PostModel[]>;
   findById(id: string): Promise<PostModel>;
   findBySlugPublic(slug: string): Promise<PostModel>;
+
+  // Mutation
+  create(post: PostModel): Promise<PostModel>;
+  delete(id: string): Promise<PostModel>;
 }

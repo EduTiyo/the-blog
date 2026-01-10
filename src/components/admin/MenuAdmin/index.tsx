@@ -7,7 +7,6 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import clsx from "clsx";
 import { FileTextIcon, HomeIcon, MenuIcon, PlusIcon } from "lucide-react";

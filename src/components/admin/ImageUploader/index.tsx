@@ -87,6 +87,7 @@ const ImageUploader = () => {
             <b>URL: </b>
             {imgUrl}
           </p>
+          {/* eslint-disable-next-line */}
           <img className="rounded-lg" src={imgUrl} alt="url da imagem" />
         </div>
       )}

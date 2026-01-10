@@ -1,11 +1,11 @@
 import { ZodError } from "zod";
 
-export function getZodErrorMessages<T>(error: ZodError<T>): string[] {
-  return Object.values(error)
-    .map((field) => {
-      if (Array.isArray(field)) return field;
-      return field?._errors || [];
-    })
-    .flat()
+export function getZodErrorMessages(error: ZodError<any>): string[] {
+  if (!error || !Array.isArray(error.issues)) return [];
+
+  const messages = error.issues
+    .map((issue) => issue.message || "Invalid value")
     .filter(Boolean);
+
+  return Array.from(new Set(messages));
 }
