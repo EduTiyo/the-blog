@@ -13,9 +13,10 @@ import { useState } from "react";
 interface ActionsCellProps {
   id: string;
   title: string;
+  slug: string;
 }
 
-export function ActionsCell({ id, title }: ActionsCellProps) {
+export function ActionsCell({ id, title, slug }: ActionsCellProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   return (
@@ -29,11 +30,20 @@ export function ActionsCell({ id, title }: ActionsCellProps) {
       <DropdownMenuContent align="end">
         <DropdownMenuItem asChild>
           <Link
-            href={`/admin/post/${id}`}
+            href={`/post/${slug}`}
             aria-label={`Ver post ${title}`}
             title={`Ver post ${title}`}
           >
             Ver post
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link
+            href={`/admin/post/${id}`}
+            aria-label={`Ver post ${title}`}
+            title={`Ver post ${title}`}
+          >
+            Editar post
           </Link>
         </DropdownMenuItem>
         <MainDialog

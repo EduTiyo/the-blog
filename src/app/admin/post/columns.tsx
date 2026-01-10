@@ -78,7 +78,7 @@ export const columns: ColumnDef<PostModel>[] = [
     id: "actions",
     cell: ({ row }) => {
       const post = row.original;
-      return <ActionsCell id={post.id} title={post.title} />;
+      return <ActionsCell id={post.id} title={post.title} slug={post.slug} />;
     },
   },
 ];
