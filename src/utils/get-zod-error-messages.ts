@@ -1,6 +1,6 @@
 import { ZodError } from "zod";
 
-export function getZodErrorMessages(error: ZodError<any>): string[] {
+export function getZodErrorMessages(error: ZodError): string[] {
   if (!error || !Array.isArray(error.issues)) return [];
 
   const messages = error.issues
