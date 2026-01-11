@@ -9,7 +9,11 @@ import { IMAGE_UPLOAD_MAX_SIZE } from "@/lib/constants";
 import { ImageUpIcon } from "lucide-react";
 import { useRef, useState, useTransition } from "react";
 
-const ImageUploader = () => {
+type ImageUploaderProps = {
+  disabled?: boolean;
+};
+
+const ImageUploader = ({ disabled = false }: ImageUploaderProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isUploading, startTransition] = useTransition();
   const [imgUrl, setImgUrl] = useState("");
@@ -74,7 +78,7 @@ const ImageUploader = () => {
         type="button"
         variant="outline"
         className="self-start"
-        disabled={isUploading}
+        disabled={isUploading || disabled}
       >
         <ImageUpIcon />
         Escolher um arquivo
@@ -99,6 +103,7 @@ const ImageUploader = () => {
         type="file"
         name="file"
         accept="image/*"
+        disabled={isUploading || disabled}
       />
     </div>
   );

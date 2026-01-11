@@ -25,7 +25,7 @@ const AdminPostIdPage = async ({ params }: AdminPostIdPageProps) => {
   return (
     <div className="flex flex-col py-4 gap-6">
       <h1 className="text-xl font-bold">Criar post</h1>
-      <ManagePostForm publicPost={publicPost} />
+      <ManagePostForm mode="update" publicPost={publicPost} />
     </div>
   );
 };
