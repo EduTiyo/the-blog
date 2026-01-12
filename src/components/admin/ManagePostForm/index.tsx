@@ -11,6 +11,7 @@ import { createPostAction } from "@/actions/post/create-post-action";
 import SpinLoader from "@/components/SpinLoader";
 import { showMessage } from "@/adapters/showMessage";
 import { updatePostAction } from "@/actions/post/update-post-action";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type ManagePostFormUpdateProps = {
   mode: "update";
@@ -27,6 +28,9 @@ type ManagePostFormProps =
 
 const ManagePostForm = (props: ManagePostFormProps) => {
   const { mode } = props;
+  const searchParams = useSearchParams();
+  const created = searchParams.get("created");
+  const router = useRouter();
 
   let publicPost;
   if (mode === "update") {
@@ -53,6 +57,16 @@ const ManagePostForm = (props: ManagePostFormProps) => {
       state.errors.forEach((error) => showMessage.error(error));
     }
   }, [state.errors]);
+
+  useEffect(() => {
+    if (created === "1") {
+      showMessage.dismiss();
+      showMessage.success("Post criado com sucesso.");
+      const url = new URL(window.location.href);
+      url.searchParams.delete("created");
+      router.replace(url.toString());
+    }
+  }, [created]);
 
   useEffect(() => {
     if (state.success) {
@@ -101,7 +115,7 @@ const ManagePostForm = (props: ManagePostFormProps) => {
           value={contentValue}
           setValue={setContentValue}
         />
-        <ImageUploader />
+        <ImageUploader disabled={isPending} />
 
         <Input
           label="URL da imagem de capa"
