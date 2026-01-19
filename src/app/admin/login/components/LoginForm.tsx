@@ -29,6 +29,7 @@ const LoginForm = () => {
           <Label htmlFor="username">Usuário</Label>
           <Input
             id="username"
+            name="username"
             type="text"
             placeholder="Seu usuário"
             required
@@ -42,6 +43,7 @@ const LoginForm = () => {
           </div>
           <Input
             id="password"
+            name="password"
             type="password"
             required
             placeholder="**********"
