@@ -10,6 +10,15 @@ type LoginActionState = {
 };
 
 export async function loginAction(state: LoginActionState, formData: FormData) {
+  const allowLogin = Boolean(Number(process.env.ALLOW_LOGIN));
+
+  if (!allowLogin) {
+    return {
+      username: "",
+      error: "Login not allowed",
+    };
+  }
+
   await asyncDelay(3000);
 
   if (!(formData instanceof FormData))
@@ -31,7 +40,7 @@ export async function loginAction(state: LoginActionState, formData: FormData) {
   const isUsernameValid = process.env.LOGIN_USER === username;
   const isPasswordValid = await verifyPassword(
     password,
-    process.env.LOGIN_PASS || ""
+    process.env.LOGIN_PASS || "",
   );
 
   if (!isUsernameValid && !isPasswordValid) {
