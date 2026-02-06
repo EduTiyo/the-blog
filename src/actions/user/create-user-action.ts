@@ -18,6 +18,7 @@ export async function createUserAction(
   state: CreateUserActionState,
   formData: FormData,
 ): Promise<CreateUserActionState> {
+  await asyncDelay(1000);
   if (!(formData instanceof FormData)) {
     return {
       user: state.user,
@@ -38,9 +39,38 @@ export async function createUserAction(
     };
   }
 
-  return {
-    user: state.user,
-    errors: [],
-    success: true,
-  };
+  const apiUrl = `${process.env.API_URL}/user` || "http://localhost:3001/user";
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(parsedFormData.data),
+    });
+
+    const json = await response.json();
+
+    if (!response.ok) {
+      return {
+        user: PublicUserSchema.parse(formObj),
+        errors: json.message,
+        success: false,
+      };
+    }
+
+    return {
+      user: PublicUserSchema.parse(formObj),
+      errors: [],
+      success: true,
+    };
+  } catch (e) {
+    console.log(e);
+    return {
+      user: PublicUserSchema.parse(formObj),
+      errors: ["Falha ao conectar-se ao servidor"],
+      success: false,
+    };
+  }
 }
