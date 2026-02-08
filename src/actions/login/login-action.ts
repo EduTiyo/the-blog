@@ -1,12 +1,13 @@
 "use server";
 
-import { createUserSession, verifyPassword } from "@/lib/login/manage-login";
+import { LoginSchema } from "@/lib/login/schemas";
+import { apiRequest } from "@/utils/api-request";
 import { asyncDelay } from "@/utils/async-delay";
-import { redirect } from "next/navigation";
+import { getZodErrorMessages } from "@/utils/get-zod-error-messages";
 
 type LoginActionState = {
-  username: string;
-  error: string;
+  email: string;
+  errors: string[];
 };
 
 export async function loginAction(state: LoginActionState, formData: FormData) {
@@ -14,48 +15,55 @@ export async function loginAction(state: LoginActionState, formData: FormData) {
 
   if (!allowLogin) {
     return {
-      username: "",
-      error: "Login not allowed",
+      email: "",
+      errors: ["Login not allowed"],
     };
   }
 
   await asyncDelay(3000);
 
-  if (!(formData instanceof FormData))
+  if (!(formData instanceof FormData)) {
     return {
-      username: "",
-      error: "Dados inválidos.",
-    };
-
-  const username = formData.get("username")?.toString().trim() || "";
-  const password = formData.get("password")?.toString().trim() || "";
-
-  if (!username || !password) {
-    return {
-      username: "",
-      error: "Digite o usuário e a senha",
+      email: "",
+      errors: ["Dados inválidos."],
     };
   }
 
-  const isUsernameValid = process.env.LOGIN_USER === username;
-  const isPasswordValid = await verifyPassword(
-    password,
-    process.env.LOGIN_PASS || "",
+  const formObj = Object.fromEntries(formData.entries());
+  const formEmail = formObj?.email?.toString() || "";
+  const parsedFormData = LoginSchema.safeParse(formObj);
+
+  if (!parsedFormData.success) {
+    const errors = getZodErrorMessages(parsedFormData.error);
+    return {
+      email: formEmail,
+      errors,
+    };
+  }
+
+  const loginResponse = await apiRequest<{ accessToken: string }>(
+    "/auth/login",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(parsedFormData.data),
+    },
   );
 
-  if (!isUsernameValid && !isPasswordValid) {
+  if (!loginResponse.success) {
     return {
-      username,
-      error: "Credenciais inválidas",
+      email: formEmail,
+      errors: loginResponse.errors,
     };
   }
 
-  if (!isUsernameValid)
-    return {
-      username: "",
-      error: "Credenciais inválidas.",
-    };
+  //await createUserSession(email);
+  //redirect("/admin/post/");
 
-  await createUserSession(username);
-  redirect("/admin/post/");
+  return {
+    email: formEmail,
+    errors: ["success"],
+  };
 }

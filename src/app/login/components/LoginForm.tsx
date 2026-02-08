@@ -10,15 +10,15 @@ import { useActionState, useEffect } from "react";
 
 const LoginForm = () => {
   const initialState = {
-    username: "",
-    error: "",
+    email: "",
+    errors: [],
   };
   const [state, action, isPending] = useActionState(loginAction, initialState);
 
   useEffect(() => {
-    if (state.error) {
+    if (state.errors.length > 0) {
       showMessage.dismiss();
-      showMessage.error(state.error);
+      state.errors.forEach((error) => showMessage.error(error));
     }
   }, [state]);
 
@@ -26,15 +26,15 @@ const LoginForm = () => {
     <form action={action}>
       <div className="flex flex-col gap-6 mb-6">
         <div className="grid gap-2">
-          <Label htmlFor="username">Usuário</Label>
+          <Label htmlFor="email">Email</Label>
           <Input
-            id="username"
-            name="username"
+            id="email"
+            name="email"
             type="text"
-            placeholder="Seu usuário"
+            placeholder="Seu email"
             required
             disabled={isPending}
-            defaultValue={state.username}
+            defaultValue={state.email}
           />
         </div>
         <div className="grid gap-2">
