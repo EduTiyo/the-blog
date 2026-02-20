@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LogInIcon } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useActionState, useEffect } from "react";
 
 const LoginForm = () => {
@@ -14,6 +15,28 @@ const LoginForm = () => {
     errors: [],
   };
   const [state, action, isPending] = useActionState(loginAction, initialState);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const userChanged = searchParams.get("userChanged");
+  const created = searchParams.get("created");
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+
+    if (userChanged === "1") {
+      showMessage.dismiss();
+      showMessage.success("Seu usuário foi modificado. Faça login novamente.");
+      url.searchParams.delete("userChanged");
+      router.replace(url.toString());
+    }
+
+    if (created === "1") {
+      showMessage.dismiss();
+      showMessage.success("Seu usuário foi criado.");
+      url.searchParams.delete("created");
+      router.replace(url.toString());
+    }
+  }, [userChanged, created, router]);
 
   useEffect(() => {
     if (state.errors.length > 0) {

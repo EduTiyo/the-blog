@@ -1,9 +1,11 @@
 "use server";
 
+import { createLoginSessionFromApi } from "@/lib/login/manage-login";
 import { LoginSchema } from "@/lib/login/schemas";
 import { apiRequest } from "@/utils/api-request";
 import { asyncDelay } from "@/utils/async-delay";
 import { getZodErrorMessages } from "@/utils/get-zod-error-messages";
+import { redirect } from "next/navigation";
 
 type LoginActionState = {
   email: string;
@@ -59,11 +61,6 @@ export async function loginAction(state: LoginActionState, formData: FormData) {
     };
   }
 
-  //await createUserSession(email);
-  //redirect("/admin/post/");
-
-  return {
-    email: formEmail,
-    errors: ["success"],
-  };
+  await createLoginSessionFromApi(loginResponse.data.accessToken);
+  redirect("/admin/post/");
 }

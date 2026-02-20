@@ -48,7 +48,7 @@ const ManagePostForm = (props: ManagePostFormProps) => {
   };
   const [state, action, isPending] = useActionState(
     actionsMap[mode],
-    initialState
+    initialState,
   );
 
   useEffect(() => {
