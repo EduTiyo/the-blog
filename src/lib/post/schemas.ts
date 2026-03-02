@@ -1,6 +1,7 @@
 import { z } from "zod";
 import sanitizeHtml from "sanitize-html";
 import { isUrlOrRelativePath } from "@/utils/is-url-or-relative-path";
+import { PublicUserSchema } from "../user/schemas";
 
 const PostBaseSchema = z.object({
   title: z
@@ -50,3 +51,31 @@ export const PostCreateSchema = PostBaseSchema;
 export const PostUpdateSchema = PostCreateSchema.extend({
   // id:
 });
+
+export const CratePostForApiSchema = PostBaseSchema.omit({
+  author: true,
+  published: true,
+}).extend({});
+
+export const UpdatePostForApiSchema = PostBaseSchema.omit({
+  author: true,
+}).extend({});
+
+export const PublicPostSchemaForApi = PostBaseSchema.extend({
+  id: z.string().default(""),
+  slug: z.string().default(""),
+  title: z.string().default(""),
+  excerpt: z.string().default(""),
+  author: PublicUserSchema.optional().default({
+    id: "",
+    email: "",
+    name: "",
+  }),
+  content: z.string().default(""),
+  coverImageUrl: z.string().default(""),
+  createdAt: z.string().default(""),
+});
+
+export type CreatePostForApiDto = z.infer<typeof CratePostForApiSchema>;
+export type UpdatePostForApiDto = z.infer<typeof UpdatePostForApiSchema>;
+export type PublicPostForApiDto = z.infer<typeof PublicPostSchemaForApi>;

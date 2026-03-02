@@ -1,6 +1,6 @@
 "use client";
 
-import { PostModel } from "@/models/post/post-model";
+import { PostModelFromApi } from "@/models/post/post-model";
 import { formatDate } from "@/utils/format-datetime";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
@@ -16,7 +16,7 @@ const arrowDirection = {
   desc: <ArrowDown className="ml-2 h-4 w-4" />,
 };
 
-export const columns: ColumnDef<PostModel>[] = [
+export const columns: ColumnDef<PostModelFromApi>[] = [
   {
     accessorKey: "title",
     header: ({ column }) => {
